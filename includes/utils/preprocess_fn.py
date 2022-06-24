@@ -1,4 +1,5 @@
 import os
+import numpy as np
 
 def rle_decode(rleString,shape):
     height = shape[0]
@@ -29,6 +30,17 @@ def rle_encode(img):
 def padImage(img, shape):
     
     shape = [shape[1], shape[0]]
+    
+    o_width = img.shape[0]
+    o_height = img.shape[1]
+    
+    if(o_width > shape[0]):
+        diff = (o_width - shape[0]) // 2
+        img = img[:, diff : o_width - diff]
+    if(o_height > shape[1]):
+        diff = (o_height - shape[1]) // 2
+        img = img[diff : o_height - diff, :]
+        
     o_width = img.shape[0]
     o_height = img.shape[1]
     

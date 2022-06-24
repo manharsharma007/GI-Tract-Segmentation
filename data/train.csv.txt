@@ -1,0 +1,5 @@
+Please use the csv file from the dataset from training. The data folder structure must be : 
+
+data/ -
+		train/
+		train.csv

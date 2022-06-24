@@ -1,16 +1,18 @@
 import cv2
+import os
 import torch
-from torch.utils.data import Dataloader
+from torch.utils.data import DataLoader
 import torch.nn as nn
-import torch.nn.functonal as TF
+import torch.nn.functional as F
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
 
 import pandas as pd
 from glob import glob
 
-from dataset import GIImageDataset
+from .dataset import GIImageDataset
 from sklearn.model_selection import train_test_split
+import numpy as np
 
 
 
@@ -19,12 +21,16 @@ def get_loader(
 		device = "cuda",
 		numWorkers = 2,
 		shuffle = False,
-		dataset,
-		transforms
+		dataset = None,
+		transforms = None,
+		shape = (288, 288)
 	):
+    
+	if(dataset is None):
+		return None
 
-	dataset = GIImageDataset(dataset, transforms)
-	return Dataloader(dataset, batch_size = batchSize, num_workers = numWorkers, shuffle = shuffle)
+	dataset = GIImageDataset(dataset, shape, transforms)
+	return DataLoader(dataset, batch_size = batchSize, num_workers = numWorkers, shuffle = shuffle)
 
 
 
@@ -61,32 +67,34 @@ def prepare_loaders(batchSize = 32,
 		device = "cuda",
 		numWorkers = 2,
 		shuffle = False,
-		):
+		csvFile = None,
+		basePath = None,
+		shape = (288, 288)
+	):
 	
-	train_data, valid_data = read_csv
+	train_data, valid_data = read_csv(csvFile, basePath)
 
 	train_transform = A.Compose(
-        [
-            A.HorizontalFlip(p=0.5),
-            A.VerticalFlip(p=0.1),
-            A.OneOf([
-                A.ShiftScaleRotate(shift_limit=0.0625, scale_limit=0.05, rotate_limit=10, p=0.5),
-                A.ElasticTransform(alpha=1, sigma=50, alpha_affine=50, p=0.50),
-            ], p=0.5),
-            ToTensorV2(),
-        ],
-    )
-    valid_transform = A.Compose(
-        [
-            ToTensorV2(),
-        ],
-    )
+		[
+		    A.HorizontalFlip(p=0.5),
+		    A.VerticalFlip(p=0.1),
+		    A.OneOf([
+		        A.ShiftScaleRotate(shift_limit=0.0625, scale_limit=0.05, rotate_limit=10, p=0.5),
+		        A.ElasticTransform(alpha=1, sigma=50, alpha_affine=50, p=0.50),
+		    ], p=0.5),
+		    ToTensorV2(),
+		],
+	)
+	valid_transform = A.Compose(
+		[
+		    ToTensorV2(),
+		],
+	)
 
-    train_loader = get_loader(batchSize, device, numWorkers = 2, shuffle = False, train_data, train_transform)
-    val_loader = get_loader(batchSize, device, numWorkers = 2, shuffle = False, valid_data, valid_transform)
-
-
-    return train_loader, val_loader
+	train_loader = get_loader(batchSize, device, numWorkers = 2, shuffle = False, dataset = train_data, transforms = train_transform, shape = shape)
+	val_loader = get_loader(batchSize, device, numWorkers = 2, shuffle = False, dataset = valid_data, transforms = valid_transform, shape = shape)
+	
+	return train_loader, val_loader
 
 
 

@@ -1,7 +1,7 @@
 import segmentation_models_pytorch as smp
-from model_vanilla import UNET
+from .model_vanilla import UNET
 
-def get_unet_model(type, inchannels, outchannels, weights = None, device = "CUDA"):
+def get_unet_model(type, inchannels, outchannels, weights = None, device = "cuda"):
 	if(type == "vanilla"):
 		return UNET(in_features=1, out_features=3).to(device)
 
