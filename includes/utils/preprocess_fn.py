@@ -27,7 +27,7 @@ def rle_encode(img):
     return ' '.join(str(x) for x in runs)
 
 
-def padImage(img, shape, crop = True]):
+def padImage(img, shape, crop = True):
     
     shape = [shape[1], shape[0]]
     
