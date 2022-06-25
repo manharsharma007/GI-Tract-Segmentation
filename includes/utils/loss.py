@@ -73,6 +73,30 @@ class DiceScore(nn.Module):
         total = (inputs + targets).sum()
         union = total - intersection 
         
-        dice = 2*(intersection + smooth)/(union + smooth)
+        dice = (2.0*intersection + smooth)/(union + smooth)
+                
+        return dice
+
+#PyTorch
+class DiceLoss(nn.Module):
+    def __init__(self, weight=None, size_average=True):
+        super(DiceLoss, self).__init__()
+
+    def forward(self, inputs, targets, smooth=1):
+        
+        #comment out if your model contains a sigmoid or equivalent activation layer
+        inputs = torch.sigmoid(inputs)       
+        
+        #flatten label and prediction tensors
+        inputs = inputs.view(-1)
+        targets = targets.view(-1)
+        
+        #intersection is equivalent to True Positive count
+        #union is the mutually inclusive area of all labels & predictions 
+        intersection = (inputs * targets).sum()
+        total = (inputs + targets).sum()
+        union = total - intersection 
+        
+        dice = 1 - (2.0*intersection + smooth)/(union + smooth)
                 
         return dice
