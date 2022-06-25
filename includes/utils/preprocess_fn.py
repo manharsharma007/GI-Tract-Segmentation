@@ -27,22 +27,23 @@ def rle_encode(img):
     return ' '.join(str(x) for x in runs)
 
 
-def padImage(img, shape):
+def padImage(img, shape, crop = True]):
     
     shape = [shape[1], shape[0]]
     
     o_width = img.shape[0]
     o_height = img.shape[1]
     
-    if(o_width > shape[0]):
-        diff = (o_width - shape[0]) // 2
-        img = img[:, diff : o_width - diff]
-    if(o_height > shape[1]):
-        diff = (o_height - shape[1]) // 2
-        img = img[diff : o_height - diff, :]
-        
-    o_width = img.shape[0]
-    o_height = img.shape[1]
+    if(crop == True):
+        if(o_width > shape[0]):
+            diff = (o_width - shape[0]) // 2
+            img = img[:, diff : o_width - diff]
+        if(o_height > shape[1]):
+            diff = (o_height - shape[1]) // 2
+            img = img[diff : o_height - diff, :]
+            
+        o_width = img.shape[0]
+        o_height = img.shape[1]
     
     h_dif = 0
     v_dif = 0
