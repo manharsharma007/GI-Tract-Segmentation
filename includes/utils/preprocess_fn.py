@@ -31,8 +31,8 @@ def padImage(img, shape, crop = True):
     
     shape = [shape[1], shape[0]]
     
-    o_width = img.shape[0]
-    o_height = img.shape[1]
+    o_width = img.shape[1]
+    o_height = img.shape[0]
     
     if(crop == True):
         if(o_width > shape[0]):
@@ -42,8 +42,8 @@ def padImage(img, shape, crop = True):
             diff = (o_height - shape[1]) // 2
             img = img[diff : o_height - diff, :]
             
-        o_width = img.shape[0]
-        o_height = img.shape[1]
+        o_width = img.shape[1]
+        o_height = img.shape[0]
     
     h_dif = 0
     v_dif = 0
