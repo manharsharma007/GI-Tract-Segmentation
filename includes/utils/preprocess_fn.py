@@ -48,12 +48,12 @@ def padImage(img, shape, crop = True):
     h_dif = 0
     v_dif = 0
     
-    if(o_width < shape[1]):
-        h_dif = np.abs(shape[1] - o_width) // 2
+    if(o_width < shape[0]):
+        h_dif = np.abs(shape[0] - o_width) // 2
     else:
         shape[0] = img.shape[1]
-    if(o_height < shape[0]):
-        v_dif = np.abs(shape[0] - o_height) // 2
+    if(o_height < shape[1]):
+        v_dif = np.abs(shape[1] - o_height) // 2
     else:
         shape[1] = img.shape[0]
     
