@@ -5,6 +5,6 @@ def get_unet_model(type_, inchannels, outchannels, weights = None, device = "cud
 	if(type_ == "vanilla"):
 		return UNET(in_features=1, out_features=3).to(device)
 
-	elif(type_ in ["efficientnet-b1", "resnet34", "vgg16", "mobilenet_v2", "resnet50", "efficientnet-b3"]):
+	elif(type_ in ["efficientnet-b1", "resnet34", "vgg16", "mobilenet_v2", "resnet50", "efficientnet-b3", "efficientnet-b5", "inceptionresnetv2"]):
 		return smp.Unet(encoder_name=type_, encoder_weights=weights,
                          in_channels=1, classes=3).to(device)
