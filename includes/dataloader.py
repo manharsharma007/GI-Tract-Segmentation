@@ -78,10 +78,10 @@ def prepare_loaders(batchSize = 32,
 		[
 		    A.HorizontalFlip(p=0.5),
 		    A.VerticalFlip(p=0.1),
-		    # A.OneOf([
-		    #     A.ShiftScaleRotate(shift_limit=0.0625, scale_limit=0.05, rotate_limit=10, p=0.5),
-		    #     A.ElasticTransform(alpha=1, sigma=50, alpha_affine=50, p=0.50),
-		    # ], p=0.5),
+		    A.OneOf([
+		        A.ShiftScaleRotate(shift_limit=0.0625, scale_limit=0.05, rotate_limit=10, p=0.5),
+		        A.ElasticTransform(alpha=1, sigma=50, alpha_affine=50, p=0.50),
+		    ], p=0.5),
 		    ToTensorV2(),
 		],
 	)
