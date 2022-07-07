@@ -10,7 +10,6 @@ class GIImageDataset(Dataset):
         
         self.image_dataframe = image_dataframe
         self.transforms = transforms
-        self.imgOnlyTransforms = imgOnlyTransforms
         self.IMG_W = shape[0]
         self.IMG_H = shape[1]
         
