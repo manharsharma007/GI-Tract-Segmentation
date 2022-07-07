@@ -5,7 +5,7 @@ from .utils.preprocess_fn import padImage, rle_decode
 
 class GIImageDataset(Dataset):
     
-    def __init__(self, image_dataframe, shape, transforms = None, imgOnlyTransforms = None):
+    def __init__(self, image_dataframe, shape, transforms = None):
         super(GIImageDataset, self).__init__()
         
         self.image_dataframe = image_dataframe
@@ -38,13 +38,5 @@ class GIImageDataset(Dataset):
 
             image = augment["image"]
             mask = augment["mask"]
-            
-       
-        if(imgOnlyTransforms is not None)
-            for transform in self.imgOnlyTransforms:
-
-                augment = transform(image = image)
-
-                image = augment["image"]
          
         return image, mask
