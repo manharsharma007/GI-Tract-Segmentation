@@ -58,7 +58,7 @@ def read_csv(csvFile, basePath = ""):
 	    
 	train_df = pd.merge(image_detail , train_df , on='id')
 	
-	df_train, df_valid = train_test_split(train_df.values, test_size=0.2, shuffle = True)
+	df_train, df_valid = train_test_split(train_df.values, test_size=0.2, shuffle = True, random_state=1)
 
 	return df_train, df_valid
 
@@ -82,12 +82,12 @@ def prepare_loaders(batchSize = 32,
 # 		        A.ShiftScaleRotate(shift_limit=0.0625, scale_limit=0.05, rotate_limit=10, p=0.5),
 # 		        A.ElasticTransform(alpha=1, sigma=50, alpha_affine=50, p=0.50),
 # 		    ], p=0.5),
-		    ToTensorV2()#transpose_mask = True),
+		    ToTensorV2(transpose_mask = True),
 		]
 	)
 	valid_transform = A.Compose(
 		[
-		    ToTensorV2()#transpose_mask = True),
+		    ToTensorV2(transpose_mask = True),
 		],
 	)
 
