@@ -29,7 +29,7 @@ class GIImageDataset(Dataset):
         mask[:,:,1] = padImage(rle_decode(self.image_dataframe[index][7], shape=(int(self.image_dataframe[index][2]),int(self.image_dataframe[index][3]))), (self.IMG_W, self.IMG_H))[0]
         mask[:,:,2] = padImage(rle_decode(self.image_dataframe[index][8], shape=(int(self.image_dataframe[index][2]),int(self.image_dataframe[index][3]))), (self.IMG_W, self.IMG_H))[0]
         
-        #mask = np.transpose(mask, (2, 0, 1))
+        mask = np.transpose(mask, (2, 0, 1))
         for transform in self.transforms:
 
             augment = transform(image = image, mask = mask)
