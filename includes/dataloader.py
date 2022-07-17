@@ -58,7 +58,7 @@ def read_csv(csvFile, basePath = ""):
 	    
 	train_df = pd.merge(image_detail , train_df , on='id')
 	
-	df_train, df_valid = train_test_split(train_df.values, test_size=0.2, shuffle = False)
+	df_train, df_valid = train_test_split(train_df.values, test_size=0.2, shuffle = True)
 
 	return df_train, df_valid
 
